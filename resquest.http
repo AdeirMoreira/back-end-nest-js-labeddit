@@ -1,0 +1,49 @@
+### SingUp
+# @name user
+POST http://localhost:3000/users
+Content-Type: application/json 
+
+{
+    "userName": "teste",
+    "email": "teste@email.com",
+    "senha": "dd555556"
+}
+
+###
+@userID = {{user.response.body.idUser}}
+
+### Login
+# @name login
+POST http://localhost:3000/user/login
+Content-Type: application/json 
+
+{
+    "email": "teste@email.com",
+    "password": "senha"
+}
+
+###
+@token = {{login.response.body.token}}
+
+### Get All Users
+GET http://localhost:3000/users
+Authorization: {{token}}
+
+### Get User By Id
+GET http://localhost:3000/users/{{userID}}
+Authorization: {{token}}
+
+### Update User By Id
+PATCH  http://localhost:3000/users/{{userID}}
+Authorization: {{token}}
+Content-Type: application/json 
+
+{
+    "userName": "usuario",
+    "senha": "password"
+}
+
+### Delete User
+DELETE http://localhost:3000/users/{{userID}}
+Authorization: {{token}}
+
