@@ -1,29 +1,30 @@
-### SingUp
-# @name user
-POST http://localhost:3000/users
+### Login
+# @name login
+POST http://localhost:3000/auth/login
 Content-Type: application/json 
 
 {
-    "userName": "teste",
     "email": "teste@email.com",
     "senha": "dd555556"
+}
+
+### SingUp
+# @name user
+POST http://localhost:3000/users
+Authorization: {{token}}
+Content-Type: application/json 
+
+{
+    "userName": "Dam",
+    "email": "Darmstadio@email.com",
+    "senha": "Darmstadio"
 }
 
 ###
 @userID = {{user.response.body.idUser}}
 
-### Login
-# @name login
-POST http://localhost:3000/user/login
-Content-Type: application/json 
-
-{
-    "email": "teste@email.com",
-    "password": "senha"
-}
-
 ###
-@token = {{login.response.body.token}}
+@token = Bearer {{login.response.body.token}}
 
 ### Get All Users
 GET http://localhost:3000/users
