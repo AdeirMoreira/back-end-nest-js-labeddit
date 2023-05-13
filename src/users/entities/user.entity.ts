@@ -1,13 +1,15 @@
+import { Post } from 'src/posts/entities/post.entity';
 import {
   Column,
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
-@Entity()
+@Entity({ name: 'Users' })
 export class User {
   @PrimaryGeneratedColumn('increment')
   idUser: number;
@@ -29,4 +31,7 @@ export class User {
 
   @DeleteDateColumn()
   deletedAt: string;
+
+  @OneToMany(() => Post, (post) => post.idAutor)
+  posts: Post[];
 }

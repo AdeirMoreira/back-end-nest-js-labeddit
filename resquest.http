@@ -4,14 +4,13 @@ POST http://localhost:3000/auth/login
 Content-Type: application/json 
 
 {
-    "email": "teste@email.com",
-    "senha": "dd555556"
+    "email": "Darmstadio@email.com",
+    "senha": "Darmstadio"
 }
 
 ### SingUp
 # @name user
 POST http://localhost:3000/users
-Authorization: {{token}}
 Content-Type: application/json 
 
 {
@@ -21,7 +20,7 @@ Content-Type: application/json
 }
 
 ###
-@userID = {{user.response.body.idUser}}
+@userID = {{login.response.body.user.idUser}}
 
 ###
 @token = Bearer {{login.response.body.token}}

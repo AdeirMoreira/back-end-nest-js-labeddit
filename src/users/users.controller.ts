@@ -6,7 +6,6 @@ import {
   Patch,
   Param,
   Delete,
-  UseGuards,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -14,18 +13,18 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { FindOneParams } from './dto/number-param.dto';
 import { User } from './entities/user.entity';
 import { DeleteResult, UpdateResult } from 'typeorm';
-import { AuthGuard } from 'src/auth/auth.guard';
+import { Public } from 'src/auth/public-routes/public-routes';
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
+  @Public()
   @Post()
   create(@Body() createUserDto: CreateUserDto): Promise<CreateUserDto & User> {
     return this.usersService.create(createUserDto);
   }
 
-  @UseGuards(AuthGuard)
   @Get()
   findAll(): Promise<[User[], number]> {
     return this.usersService.findAll();
