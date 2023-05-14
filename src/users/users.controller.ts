@@ -10,7 +10,7 @@ import {
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { FindOneParams } from './dto/number-param.dto';
+import { idUser } from './dto/idUser.dto';
 import { User } from './entities/user.entity';
 import { DeleteResult, UpdateResult } from 'typeorm';
 import { Public } from 'src/auth/public-routes/public-routes';
@@ -31,14 +31,14 @@ export class UsersController {
   }
 
   @Get(':id')
-  findOne(@Param() params: FindOneParams): Promise<User[]> {
+  findOne(@Param() params: idUser): Promise<User[]> {
     const { id } = params;
     return this.usersService.findOne(+id);
   }
 
   @Patch(':id')
   update(
-    @Param() params: FindOneParams,
+    @Param() params: idUser,
     @Body() updateUserDto: UpdateUserDto,
   ): Promise<UpdateResult> {
     const { id } = params;
@@ -46,7 +46,7 @@ export class UsersController {
   }
 
   @Delete(':id')
-  remove(@Param() params: FindOneParams): Promise<DeleteResult> {
+  remove(@Param() params: idUser): Promise<DeleteResult> {
     const { id } = params;
     return this.usersService.remove(+id);
   }

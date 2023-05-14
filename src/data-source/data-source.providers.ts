@@ -17,7 +17,7 @@ export const objConfig: DataSourceOptions = {
   password: process.env.DB_PASS,
   database: process.env.DB_NAME,
   entities: [User, Post, Comment],
-  synchronize: false,
+  synchronize: true,
   migrations: [
     CreateUsersTable1683988946303,
     CreatePostsTable1683996086303,

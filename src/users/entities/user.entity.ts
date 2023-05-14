@@ -32,6 +32,6 @@ export class User {
   @DeleteDateColumn()
   deletedAt: string;
 
-  @OneToMany(() => Post, (post) => post.idAutor)
+  @OneToMany(() => Post, (post) => post.idUser)
   posts: Post[];
 }

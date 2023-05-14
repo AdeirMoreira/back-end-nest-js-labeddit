@@ -5,7 +5,7 @@ Content-Type: application/json
 
 {
     "email": "Darmstadio@email.com",
-    "senha": "Darmstadio"
+    "senha": "senhadodam"
 }
 
 ### SingUp
@@ -14,9 +14,9 @@ POST http://localhost:3000/users
 Content-Type: application/json 
 
 {
-    "userName": "Dam",
+    "userName": "Darmstadio",
     "email": "Darmstadio@email.com",
-    "senha": "Darmstadio"
+    "senha": "senhadodam"
 }
 
 ###
@@ -45,5 +45,73 @@ Content-Type: application/json
 
 ### Delete User
 DELETE http://localhost:3000/users/{{userID}}
+Authorization: {{token}}
+
+### Create Post
+POST http://localhost:3000/posts
+Authorization: {{token}}
+Content-Type: application/json 
+
+{
+    "titulo": "Post do Darmstadio",
+    "conteudo": "ASLDVM ASKD KAS SADKAKS  SEGUNDA POSTAGEM",
+    "idUser":2
+}
+
+### Get Post by id
+GET  http://localhost:3000/posts/1
+Authorization: {{token}}
+
+### Get All Posts
+GET  http://localhost:3000/posts
+Authorization: {{token}}
+
+### Update Post
+PATCH http://localhost:3000/posts/1
+Authorization: {{token}}
+Content-Type: application/json 
+
+{
+    "titulo": "titulo do posta UPDATE",
+    "conteudo": "asdfmaç mçasmdçamsdç mam laçsdm çlamsd masçdlm açsmd ç~lamsd UPDATE",
+    "idUser":1
+}
+
+### DELETE POST
+DELETE http://localhost:3000/posts/1
+Authorization: {{token}}
+
+### Create Comment
+POST http://localhost:3000/comments
+Authorization: {{token}}
+Content-Type: application/json 
+
+{
+    
+    "conteudo": "COMENTARIO NO POST DO DAM",
+    "idUser":2,
+    "idPost": 2
+}
+
+### Get Commment by id
+GET  http://localhost:3000/comments/1
+Authorization: {{token}}
+
+### Get All Comments
+GET  http://localhost:3000/comments
+Authorization: {{token}}
+
+### Update Comment
+PATCH http://localhost:3000/comments/1
+Authorization: {{token}}
+Content-Type: application/json 
+
+{
+    "conteudo": "COMENTATIO ASDKFAKSD  AKK ASKASDLKKLSDAKL K ASLKSANLK UPDATE",
+    "idComment":1
+}
+
+### DELETE Comment
+DELETE http://localhost:3000/comments/1
 Authorization: {{token}}
 

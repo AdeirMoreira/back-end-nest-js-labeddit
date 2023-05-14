@@ -9,7 +9,7 @@ import { DeleteResult, Repository, UpdateResult } from 'typeorm';
 export class UsersService {
   constructor(
     @InjectRepository(User)
-    private userRepository: Repository<User>,
+    private readonly userRepository: Repository<User>,
   ) {}
 
   create(createUserDto: CreateUserDto): Promise<CreateUserDto & User> {

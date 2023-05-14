@@ -19,10 +19,10 @@ export class Comment {
   conteudo: string;
 
   @ManyToOne(() => User, (user) => user.idUser)
-  idAutor: User;
+  idUser: number;
 
   @ManyToOne(() => Post, (post) => post.idPost)
-  idPost: Post;
+  idPost: number;
 
   @CreateDateColumn()
   createdAt: string;

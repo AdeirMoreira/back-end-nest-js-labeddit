@@ -16,14 +16,15 @@ export class Post {
   @PrimaryGeneratedColumn('increment')
   idPost: number;
 
-  @Column('varchar', { length: 255, nullable: false })
+  @Column({ type: 'varchar', length: 255, nullable: false })
   titulo: string;
 
-  @Column('text', { nullable: false })
+  @Column({ type: 'text', nullable: false })
   conteudo: string;
 
   @ManyToOne(() => User, (user) => user.idUser)
-  idAutor: User;
+  @Column({ name: 'idAutorIdUser', type: 'int', nullable: false })
+  idUser: number;
 
   @CreateDateColumn()
   createdAt: string;

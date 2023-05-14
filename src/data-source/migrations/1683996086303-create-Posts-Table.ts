@@ -31,7 +31,7 @@ export class CreatePostsTable1683996086303 implements MigrationInterface {
             isNullable: false,
           },
           {
-            name: 'idAutor',
+            name: 'idUser',
             type: 'int',
             isNullable: false,
           },
@@ -60,7 +60,7 @@ export class CreatePostsTable1683996086303 implements MigrationInterface {
       new TableForeignKey({
         referencedTableName: 'Users',
         referencedColumnNames: ['idUser'],
-        columnNames: ['idAutor'],
+        columnNames: ['idUser'],
         name: 'Post_Users_idUser_FK',
       }),
     );
