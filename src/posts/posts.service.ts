@@ -1,10 +1,11 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Post } from './entities/post.entity';
 import { Repository } from 'typeorm';
 import { User } from 'src/users/entities/user.entity';
+import sucessResponse from 'src/common/success/sucess.response';
 
 @Injectable()
 export class PostsService {
@@ -20,22 +21,56 @@ export class PostsService {
     return this.postRepository.save(createPostDto);
   }
 
-  findAll() {
-    return this.postRepository.findAndCount({
+  async findAll() {
+    const posts = await this.postRepository.findAndCount({
       relations: { comments: true },
     });
+    if (posts.length) {
+      return posts;
+    } else {
+      throw new NotFoundException('Nenhum post encontrado.');
+    }
   }
 
-  findOne(id: number) {
-    return this.postRepository.findOneBy({ idPost: id });
+  async findOne(id: number) {
+    const post = await this.postRepository.findOne({
+      where: {
+        idPost: id,
+      },
+      relations: { comments: true },
+    });
+    if (post) {
+      return post;
+    } else {
+      throw new NotFoundException('Nenhum post encontrado com o id fornecido.');
+    }
   }
 
-  update(id: number, updatePostDto: UpdatePostDto) {
-    return this.postRepository.update({ idPost: id }, updatePostDto);
+  async update(id: number, updatePostDto: UpdatePostDto) {
+    const { affected } = await this.postRepository.update(
+      { idPost: id },
+      updatePostDto,
+    );
+    if (affected) {
+      return sucessResponse.res(
+        HttpStatus.OK,
+        `${affected} registros atualizados`,
+      );
+    } else {
+      throw new NotFoundException('Nenhum post encontrado com o id fornecido.');
+    }
   }
 
-  remove(id: number) {
-    return this.postRepository.delete({ idPost: id });
+  async remove(id: number) {
+    const { affected } = await this.postRepository.delete({ idPost: id });
+    if (affected) {
+      return sucessResponse.res(
+        HttpStatus.OK,
+        `${affected} registros deletados`,
+      );
+    } else {
+      throw new NotFoundException('Nenhum post encontrado com o id fornecido.');
+    }
   }
 
   async getAutor(idAutor: number) {

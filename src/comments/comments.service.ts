@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { UpdateCommentDto } from './dto/update-comment.dto';
 import { Repository } from 'typeorm';
@@ -6,6 +6,7 @@ import { Comment } from './entities/comment.entity';
 import { Post } from 'src/posts/entities/post.entity';
 import { User } from 'src/users/entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
+import sucessResponse from 'src/common/success/sucess.response';
 
 @Injectable()
 export class CommentsService {
@@ -24,20 +25,55 @@ export class CommentsService {
     return this.commentRepository.save(createCommentDto);
   }
 
-  findAll() {
-    return this.commentRepository.findAndCount();
+  async findAll() {
+    const comments = await this.commentRepository.findAndCount();
+    if (comments.length) {
+      return comments;
+    } else {
+      throw new NotFoundException('Não foram encontrados comentários.');
+    }
   }
 
-  findOne(id: number) {
-    return this.commentRepository.findOneBy({ idComment: id });
+  async findOne(id: number) {
+    const comment = await this.commentRepository.findOneBy({ idComment: id });
+    if (comment) {
+      return comment;
+    } else {
+      throw new NotFoundException(
+        'Não foi encontrado nenhum comentário com id infromado.',
+      );
+    }
   }
 
-  update(id: number, updateCommentDto: UpdateCommentDto) {
-    return this.commentRepository.update({ idComment: id }, updateCommentDto);
+  async update(id: number, updateCommentDto: UpdateCommentDto) {
+    const { affected } = await this.commentRepository.update(
+      { idComment: id },
+      updateCommentDto,
+    );
+    if (affected) {
+      return sucessResponse.res(
+        HttpStatus.OK,
+        `${affected} registros atualizados`,
+      );
+    } else {
+      throw new NotFoundException(
+        'Nenhum comentário encontrado com o id fornecido.',
+      );
+    }
   }
 
-  remove(id: number) {
-    return this.commentRepository.delete({ idComment: id });
+  async remove(id: number) {
+    const { affected } = await this.commentRepository.delete({ idComment: id });
+    if (affected) {
+      return sucessResponse.res(
+        HttpStatus.OK,
+        `${affected} registros atualizados`,
+      );
+    } else {
+      throw new NotFoundException(
+        'Nenhum comentário encontrado com o id fornecido.',
+      );
+    }
   }
 
   async getPost(idPost: number) {

@@ -4,6 +4,7 @@ import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
   app.useGlobalPipes(
     new ValidationPipe({
       enableDebugMessages: true,
@@ -14,6 +15,7 @@ async function bootstrap() {
       dismissDefaultMessages: true,
     }),
   );
+
   await app.listen(3000);
 }
 bootstrap();

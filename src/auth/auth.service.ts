@@ -1,8 +1,4 @@
-import {
-  Injectable,
-  NotFoundException,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { User } from 'src/users/entities/user.entity';
 import { UsersService } from 'src/users/users.service';
@@ -20,11 +16,11 @@ export class AuthService {
     );
 
     if (!user) {
-      throw new NotFoundException();
+      throw new UnauthorizedException('Credenciais Inválidas.');
     }
 
     if (user?.senha !== senhaUsuario) {
-      throw new UnauthorizedException();
+      throw new UnauthorizedException('Credenciais Inválidas.');
     }
 
     const payload = { username: user.userName, sub: user.idUser };
