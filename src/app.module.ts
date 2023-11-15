@@ -11,9 +11,9 @@ import { AllExceptionsFilter } from './common/exceptions/allExceptionsFilter.fil
 
 @Module({
   imports: [
+    AuthModule,
     DataSourceModule,
     UsersModule,
-    AuthModule,
     PostsModule,
     CommentsModule,
   ],
