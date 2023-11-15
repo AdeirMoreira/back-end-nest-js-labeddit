@@ -1,13 +1,28 @@
+import { TypeORMError } from 'typeorm';
+import { DEFAULT_MESSAGE } from '../handlerException.filter';
+
+interface typeORMErrorDetails {
+  errno?: number;
+}
+
+const COMMOM_TYPEORM_ERROR_CODES = [1146];
+
 export const typeORMHandler = (
-  errno: number | undefined,
-  message: string,
+  error: TypeORMError & typeORMErrorDetails,
 ): string => {
-  switch (errno) {
-    case 1062:
-      return duplicateEntryError(message);
-    default:
-      return 'Erro não indentificado no servidor, tente novamente mais tarde.';
+  const { errno, message } = error;
+
+  console.log('ERROR>>>>>>>>>>>>>>>>>>>', error);
+
+  if (COMMOM_TYPEORM_ERROR_CODES.includes(errno as number)) {
+    return DEFAULT_MESSAGE;
   }
+
+  if (errno === 1062) {
+    return duplicateEntryError(message);
+  }
+
+  return DEFAULT_MESSAGE;
 };
 
 const duplicateEntryError = (message: string) => {

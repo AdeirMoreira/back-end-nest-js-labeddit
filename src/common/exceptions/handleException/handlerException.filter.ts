@@ -2,24 +2,19 @@ import { HttpException, HttpStatus } from '@nestjs/common';
 import { TypeORMError } from 'typeorm';
 import { typeORMHandler } from './typeORMError/typeORM.handler';
 
-interface typeORMErrorDetails {
-  errno?: number;
-}
-
+export const DEFAULT_MESSAGE = 'Erro interno no servidor.';
 export class handleExceptionFilter {
+  messageError: string;
+
   constructor(private exception: any) {
     this.handlerError();
   }
-  messageError = '';
 
   handlerError() {
-    switch (this.exception) {
-      case this.exception instanceof TypeORMError:
-        this.typeORMHandlerError(this.exception);
-        break;
-      default:
-        this.messageError =
-          'Erro não indentificado no servidor, tente novamente mais tarde.';
+    if (this.exception instanceof TypeORMError) {
+      this.messageError = typeORMHandler(this.exception);
+    } else {
+      this.messageError = DEFAULT_MESSAGE;
     }
   }
 
@@ -32,9 +27,5 @@ export class handleExceptionFilter {
       },
       HttpStatus.INTERNAL_SERVER_ERROR,
     );
-  }
-
-  typeORMHandlerError(exception: TypeORMError & typeORMErrorDetails) {
-    this.messageError = typeORMHandler(exception.errno, exception.message);
   }
 }
