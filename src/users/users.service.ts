@@ -1,10 +1,10 @@
-import { HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
-import sucessResponse from 'src/common/success/sucess.response';
+import { SuccessResponse } from 'src/common/success/sucess.response';
 
 @Injectable()
 export class UsersService {
@@ -50,10 +50,7 @@ export class UsersService {
       updateUserDto,
     );
     if (affected) {
-      return sucessResponse.res(
-        HttpStatus.OK,
-        `${affected} registros atualizados.`,
-      );
+      return SuccessResponse.updated(affected);
     } else {
       throw new NotFoundException(
         'Não foi encontrado nenhum usuário com o id fornecido.',
@@ -64,10 +61,7 @@ export class UsersService {
   async remove(idUser: number) {
     const { affected } = await this.userRepository.delete({ idUser });
     if (affected) {
-      return sucessResponse.res(
-        HttpStatus.OK,
-        `${affected} registros deletados.`,
-      );
+      return SuccessResponse.deleted(affected);
     } else {
       throw new NotFoundException(
         'Não foi encontrado nenhum usuário com o id fornecido.',

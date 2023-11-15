@@ -30,7 +30,7 @@ GET http://localhost:3000/users
 Authorization: {{token}}
 
 ### Get User By Id
-GET http://localhost:3000/users/96{{userID}}
+GET http://localhost:3000/users/{{userID}}
 Authorization: {{token}}
 
 ### Update User By Id
@@ -53,8 +53,8 @@ Content-Type: application/json
 
 {
     "titulo": "Post do Darmstadio",
-    "conteudo": "ASLDVM ASKD KAS SADKAKS  SEGUNDA POSTAGEM",
-    "idUser":2
+    "conteudo": "Conteúdo do Post do Dam",
+    "idUser":{{userID}}
 }
 
 ### Get Post by id
@@ -66,18 +66,18 @@ GET  http://localhost:3000/posts
 Authorization: {{token}}
 
 ### Update Post
-PATCH http://localhost:3000/posts/1
+PATCH http://localhost:3000/posts/2
 Authorization: {{token}}
 Content-Type: application/json 
 
 {
-    "titulo": "titulo do posta UPDATE",
+    "titulo": "Post do Darmstadio UPDATE",
     "conteudo": "asdfmaç mçasmdçamsdç mam laçsdm çlamsd masçdlm açsmd ç~lamsd UPDATE",
     "idUser":1
 }
 
 ### DELETE POST
-DELETE http://localhost:3000/posts/8
+DELETE http://localhost:3000/posts/1
 Authorization: {{token}}
 
 ### Create Comment
@@ -87,8 +87,8 @@ Content-Type: application/json
 
 {
     
-    "conteudo": "COMENTARIO NO POST DO DAM",
-    "idUser":10,
+    "conteudo": "MAIS UM COMENTARIOS QUALQUER",
+    "idUser":2,
     "idPost": 2
 }
 

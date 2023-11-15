@@ -6,8 +6,7 @@ export const typeORMHandler = (
     case 1062:
       return duplicateEntryError(message);
     default:
-      console.log(message);
-      return 'Erro no typeORM não indentificado.';
+      return 'Erro não indentificado no servidor, tente novamente mais tarde.';
   }
 };
 

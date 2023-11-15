@@ -9,7 +9,7 @@ import { Comment } from 'src/comments/entities/comment.entity';
 
 config();
 
-export const objConfig: DataSourceOptions = {
+export const dataSourceObjectConfig: DataSourceOptions = {
   type: process.env.DB_TYPE as any,
   host: process.env.DB_HOST,
   port: Number(process.env.DB_PORT),
@@ -25,6 +25,4 @@ export const objConfig: DataSourceOptions = {
   ],
 };
 
-export const dataSource = new DataSource(objConfig);
-
-dataSource.initialize();
+export const dataSource = new DataSource(dataSourceObjectConfig);

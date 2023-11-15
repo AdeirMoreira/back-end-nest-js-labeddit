@@ -1,12 +1,11 @@
-import { HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Post } from './entities/post.entity';
 import { Repository } from 'typeorm';
 import { User } from 'src/users/entities/user.entity';
-import sucessResponse from 'src/common/success/sucess.response';
-
+import { SuccessResponse } from 'src/common/success/sucess.response';
 @Injectable()
 export class PostsService {
   constructor(
@@ -52,10 +51,7 @@ export class PostsService {
       updatePostDto,
     );
     if (affected) {
-      return sucessResponse.res(
-        HttpStatus.OK,
-        `${affected} registros atualizados`,
-      );
+      return SuccessResponse.updated(affected);
     } else {
       throw new NotFoundException('Nenhum post encontrado com o id fornecido.');
     }
@@ -64,10 +60,7 @@ export class PostsService {
   async remove(id: number) {
     const { affected } = await this.postRepository.delete({ idPost: id });
     if (affected) {
-      return sucessResponse.res(
-        HttpStatus.OK,
-        `${affected} registros deletados`,
-      );
+      return SuccessResponse.deleted(affected);
     } else {
       throw new NotFoundException('Nenhum post encontrado com o id fornecido.');
     }

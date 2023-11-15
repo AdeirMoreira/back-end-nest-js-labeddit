@@ -1,4 +1,4 @@
-import { HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { UpdateCommentDto } from './dto/update-comment.dto';
 import { Repository } from 'typeorm';
@@ -6,7 +6,7 @@ import { Comment } from './entities/comment.entity';
 import { Post } from 'src/posts/entities/post.entity';
 import { User } from 'src/users/entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import sucessResponse from 'src/common/success/sucess.response';
+import { SuccessResponse } from 'src/common/success/sucess.response';
 
 @Injectable()
 export class CommentsService {
@@ -51,10 +51,7 @@ export class CommentsService {
       updateCommentDto,
     );
     if (affected) {
-      return sucessResponse.res(
-        HttpStatus.OK,
-        `${affected} registros atualizados`,
-      );
+      return SuccessResponse.updated(affected);
     } else {
       throw new NotFoundException(
         'Nenhum comentário encontrado com o id fornecido.',
@@ -65,10 +62,7 @@ export class CommentsService {
   async remove(id: number) {
     const { affected } = await this.commentRepository.delete({ idComment: id });
     if (affected) {
-      return sucessResponse.res(
-        HttpStatus.OK,
-        `${affected} registros atualizados`,
-      );
+      return SuccessResponse.deleted(affected);
     } else {
       throw new NotFoundException(
         'Nenhum comentário encontrado com o id fornecido.',
