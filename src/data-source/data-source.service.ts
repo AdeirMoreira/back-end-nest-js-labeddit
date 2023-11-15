@@ -6,6 +6,8 @@ import { CreateCommentsTable1683997987671 } from './migrations/1683997987671-cre
 import { User } from 'src/users/entities/user.entity';
 import { Post } from 'src/posts/entities/post.entity';
 import { Comment } from 'src/comments/entities/comment.entity';
+import { CreateFKPostIdUser1700084730063 } from './migrations/1700084730063-create-FK-Post-idUser';
+import { CreateFKCommenstIdUserIdPost1700088422112 } from './migrations/1700088422112-create-FK-Commenst-idUser-idPost';
 
 config();
 
@@ -17,11 +19,12 @@ export const dataSourceObjectConfig: DataSourceOptions = {
   password: process.env.DB_PASS,
   database: process.env.DB_NAME,
   entities: [User, Post, Comment],
-  synchronize: false,
   migrations: [
     CreateUsersTable1683988946303,
     CreatePostsTable1683996086303,
     CreateCommentsTable1683997987671,
+    CreateFKPostIdUser1700084730063,
+    CreateFKCommenstIdUserIdPost1700088422112,
   ],
 };
 

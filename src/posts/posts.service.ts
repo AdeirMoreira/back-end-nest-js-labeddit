@@ -17,7 +17,11 @@ export class PostsService {
 
   async create(createPostDto: CreatePostDto) {
     await this.getAutor(createPostDto.idUser);
-    return this.postRepository.save(createPostDto);
+    console.log(createPostDto);
+
+    const response = await this.postRepository.save(createPostDto);
+    console.log(response);
+    return response;
   }
 
   async findAll() {

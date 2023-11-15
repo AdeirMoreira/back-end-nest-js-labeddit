@@ -5,6 +5,7 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  JoinColumn,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
@@ -23,7 +24,7 @@ export class Post {
   conteudo: string;
 
   @ManyToOne(() => User, (user) => user.idUser)
-  @Column({ name: 'idAutorIdUser', type: 'int', nullable: false })
+  @JoinColumn({ name: 'idUser' })
   idUser: number;
 
   @CreateDateColumn()

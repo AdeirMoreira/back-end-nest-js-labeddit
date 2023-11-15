@@ -5,7 +5,7 @@ interface typeORMErrorDetails {
   errno?: number;
 }
 
-const COMMOM_TYPEORM_ERROR_CODES = [1146];
+const COMMOM_TYPEORM_ERROR_CODES = [1054, 1146];
 
 export const typeORMHandler = (
   error: TypeORMError & typeORMErrorDetails,

@@ -31,11 +31,6 @@ export class CreatePostsTable1683996086303 implements MigrationInterface {
             isNullable: false,
           },
           {
-            name: 'idUser',
-            type: 'int',
-            isNullable: false,
-          },
-          {
             name: 'createdAt',
             type: 'datetime',
             default: 'now()',
@@ -50,24 +45,29 @@ export class CreatePostsTable1683996086303 implements MigrationInterface {
             type: 'datetime',
             isNullable: true,
           },
+          {
+            name: 'idUser',
+            type: 'int',
+            isNullable: false,
+          },
         ],
       }),
       true,
     );
 
-    await queryRunner.createForeignKey(
-      'Posts',
-      new TableForeignKey({
-        referencedTableName: 'Users',
-        referencedColumnNames: ['idUser'],
-        columnNames: ['idUser'],
-        name: 'Post_Users_idUser_FK',
-      }),
-    );
+    // await queryRunner.createForeignKey(
+    //   'Posts',
+    //   new TableForeignKey({
+    //     referencedTableName: 'Users',
+    //     referencedColumnNames: ['idUser'],
+    //     columnNames: ['idUseridUser'],
+    //     name: 'Post_Users_idUser_FK',
+    //   }),
+    // );
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropForeignKey('Posts', 'Post_Users_idUser_FK');
+    // await queryRunner.dropForeignKey('Posts', 'Post_Users_idUser_FK');
     await queryRunner.dropTable('Posts');
   }
 }

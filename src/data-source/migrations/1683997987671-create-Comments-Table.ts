@@ -1,9 +1,4 @@
-import {
-  MigrationInterface,
-  QueryRunner,
-  Table,
-  TableForeignKey,
-} from 'typeorm';
+import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
 export class CreateCommentsTable1683997987671 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
@@ -53,31 +48,9 @@ export class CreateCommentsTable1683997987671 implements MigrationInterface {
       }),
       true,
     );
-
-    await queryRunner.createForeignKey(
-      'Comments',
-      new TableForeignKey({
-        referencedTableName: 'Users',
-        referencedColumnNames: ['idUser'],
-        columnNames: ['idUser'],
-        name: 'Comments_Users_idUser_FK',
-      }),
-    );
-
-    await queryRunner.createForeignKey(
-      'Comments',
-      new TableForeignKey({
-        referencedTableName: 'Posts',
-        referencedColumnNames: ['idPost'],
-        columnNames: ['idPost'],
-        name: 'Comments_Post_idPost_FK',
-      }),
-    );
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropForeignKey('Comments', 'Comments_Users_idUser_FK');
-    await queryRunner.dropForeignKey('Comments', 'Comments_Post_idPost_FK');
     await queryRunner.dropTable('Comments');
   }
 }
